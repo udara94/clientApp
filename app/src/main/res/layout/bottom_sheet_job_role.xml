@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/circular_bottom_sheet">
+
+    <LinearLayout
+        android:background="@drawable/bottom_sheet_drawable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="30dp">
+
+        <TextView
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_bottom_sheet"/>
+        <NumberPicker
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/job_role_picker"
+            android:layout_gravity="center" />
+
+        <Button
+            android:id="@+id/btn_select"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/lbl_select"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
+            android:background="@drawable/button_gradient_drawable"/>
+    </LinearLayout>
+
+</RelativeLayout>

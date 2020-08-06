@@ -1,0 +1,163 @@
+<resources>
+    <string name="app_name">Client App</string>
+
+    <!-- Splash Screen -->
+    <string name="lbl_powerd_by">Powered by Flicker</string>
+
+    <!-- Home fragment -->
+    <string name="title_home">Home</string>
+    <string name="lbl_generate_cv">Generate CV</string>
+    <string name="lbl_fav_jobs">Favourite Jobs</string>
+    <string name="lbl_notification">Notifications</string>
+    <string name="lbl_rate_app">Rate App</string>
+    <string name="lbl_about">About</string>
+    <string name="lbl_settings">Settings</string>
+    <string name="lbl_government_job">Government Jobs</string>
+    <string name="lbl_private_job">Private Jobs</string>
+    <string name="lbl_post_job">Post Your Vacancy</string>
+    <string name="lbl_employee">Are You An Employer ?</string>
+
+
+    <!-- Job Type List Fragment-->
+    <string name="title_job_types">Job Types</string>
+
+    <!-- Job List Fragment-->
+    <string name="title_job_list">Job List</string>
+    <string name="hint_search">Search</string>
+
+    <!-- Job Details Fragment-->
+    <string name="title_details">Job Details</string>
+    <string name="lbl_job_role">Vacancy</string>
+    <string name="lbl_employer">Employer</string>
+    <string name="lbl_job_ref">Reference</string>
+    <string name="lbl_closing_date">Closing Date</string>
+    <string name="lbl_job_description">Job Description</string>
+    <string name="btn_apply_now">Apply Now</string>
+    <string name="btn_share_now">Share Now</string>
+    <string name="lbl_job_skill">Job Skills</string>
+    <string name="lbl_job_qualification">Job Qualifications</string>
+    <string name="lbl_job_experience">Job Experience</string>
+    <string name="lbl_job_salary">Salary</string>
+    <string name="lbl_job_type">Job Type</string>
+    <string name="lbl_posted_date">Posted Date</string>
+
+    <!-- Application Fragment -->
+    <string name="title_application">Application</string>
+    <string name="lbl_employer_email">Employer Email</string>
+    <string name="lbl_your_email">Your Email</string>
+    <string name="lbl_your_name">Your Name</string>
+    <string name="lbl_subject">Email Subject</string>
+    <string name="btn_send">Send</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_attach_cv">Attach CV</string>
+
+    <!-- Generate CV Fragment -->
+    <string name="title_cv_generate">CV Generate</string>
+    <string name="lbl_personal_info">Personal\nInformation</string>
+    <string name="lbl_objectives">Objectives</string>
+    <string name="lbl_academics">Academics</string>
+    <string name="lbl_experience">Experience</string>
+    <string name="lbl_projects">Projects</string>
+    <string name="lbl_feild">Field of Interest</string>
+    <string name="lbl_industrial">Industrial Exposure</string>
+    <string name="lbl_reference">Reference</string>
+
+    <!-- Settings Fragment -->
+    <string name="title_setting">Settings</string>
+    <string name="lbl_save">Save</string>
+    <string name="lbl_notification_settings">Notification Settings</string>
+    <string name="lbl_info">You can customize receiving notification by job type. Then you will receive notifications as your selection. </string>
+
+    <!-- Post Job Vacancy Fragment-->
+    <string name="title_post_job">Post Job Vacancy</string>
+
+
+    <!-- Subscribe Alert-->
+    <string name="lbl_subscribe">Subscribe Now</string>
+    <string name="lbl_tax">Dialog Rs. 5+ tax per1 day(s)</string>
+    <string name="lbl_des_en">The subscription amount will be charge to your mobile phone account and your subscription will be renewed automatically</string>
+    <string name="lbl_des_sin">මෙම සේවාව සඳහා දායක  මුදල ඔබේ ජංගම දුරකථන ගිණුමෙන් අය කරනු ලැබේ. දායක මුදල් ස්වයංක්‍රීයව නැවත අලුත් කෙරෙනු ලැබේ</string>
+    <string name="btn_subscribe_now">SUBSCRIBE NOW</string>
+    <string name="btn_cancel_alert">Cancel</string>
+    <string name="lbl_enter_phone_number_en">Enter your mobile number</string>
+    <string name="lbl_enter_phone_number_sin">ඔබේ ජංගම දුරකථන අංකය ඇතුලත් කරන්න</string>
+    <string name="btn_submit">Submit</string>
+    <string name="lbl_verification_code_en">Enter verification code</string>
+    <string name="lbl_verification_code_sin">SMS කෝඩ් එක ඇතුලත් කරන්න</string>
+    <string name="btn_retry">RETRY</string>
+
+
+
+
+    <!-- Favourite Jobs Fragments -->
+    <string name="title_fav_jobs">Favourite Jobs</string>
+    <string name="lbl_empty_data">You don\'t have any favourite jobs</string>
+
+    <!-- Notification Fragment-->
+    <string name="title_notification">Notifications</string>
+    <string name="lbl_empty_notifications">You don\'t have any Notifications</string>
+
+    <!-- Job Role Select Bottom sheet -->
+    <string name="title_bottom_sheet">Job Roles</string>
+    <string name="lbl_select">Select</string>
+    
+    <!-- Post job vacancy Fragment -->
+    <string name="lbl_post_job_info">Are you an employer and having job vacancies. Send your job vacancy details to us we will post the job.</string>
+    <string name="lbl_email">apic.jobz@gmail.com</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="openDrawer">open_drawer</string>
+    <string name="closeDrawer">close_drawer</string>
+
+    <!-- Navigation Drawer menu labels -->
+    <string name="nav_home">Home</string>
+    <string name="nav_generate_cv">Generate CV</string>
+    <string name="nav_fav_jobs">Favourite Jobs</string>
+    <string name="nav_notifications">Notifications</string>
+    <string name="nav_settings">Settings</string>
+    <string name="nav_about_us">About Us</string>
+    <string name="nav_privacy_policy">Privacy Policy</string>
+    <string name="nav_rate_app">Rate App</string>
+
+    <!-- Toolbar titles when navigation menu item is selected -->
+    <string-array name="nav_item_activity_titles">
+        <item>Home</item>
+        <item>Photos</item>
+        <item>Movies</item>
+        <item>Notifications</item>
+        <item>Settings</item>
+    </string-array>
+
+
+
+    <string name="activity_title_about_us">About Us</string>
+    <string name="activity_title_privacy_policy">Privacy Policy</string>
+    <string name="action_clear_all">Clear All</string>
+    <string name="action_logout">Logout</string>
+    <string name="action_mark_all_read">Mark All as Read</string>
+
+    <string name="title_activity_welcome">Home Screen</string>
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+
+
+    <!-- Welcome screen-->
+
+    <string name="slide_1_title">Looking for a job ?</string>
+    <string name="slide_1_desc">Still not having a job. You are on the best place</string>
+
+    <string name="slide_2_title">Having job vacancies ?</string>
+    <string name="slide_2_desc">Are you an employer and having job vacancies. You can post them here!</string>
+
+    <string name="slide_3_title">Get job updates</string>
+    <string name="slide_3_desc">Are you busy to search jobs. Leave it for us. We will inform you the best job for you</string>
+
+    <string name="slide_4_title">Lets get started!</string>
+    <string name="slide_4_desc">Book tickets of any transportation and travel the world!</string>
+
+    <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
+    <string name="play_again">Play Again</string>
+
+</resources>

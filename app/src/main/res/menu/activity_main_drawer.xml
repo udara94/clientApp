@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/nav_home"
+            android:title="@string/nav_home" />
+<!--        <item-->
+<!--            android:id="@+id/nav_generate_cv"-->
+<!--            android:icon="@drawable/nav_cv"-->
+<!--            android:title="@string/nav_generate_cv" />-->
+
+        <item
+            android:id="@+id/nav_notifications"
+            android:icon="@drawable/nav_notification"
+            android:title="@string/nav_notifications" />
+    </group>
+
+
+</menu>
