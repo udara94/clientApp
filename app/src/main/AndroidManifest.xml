@@ -16,14 +16,18 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:screenOrientation="portrait"
-            android:name="com.example.clientapp.ui.activity.MainActivity">
+        <activity android:name=".ui.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+        </activity>
+        <activity
+            android:screenOrientation="portrait"
+            android:name="com.example.clientapp.ui.activity.MainActivity">
+
         </activity>
 
         <service android:name="com.example.clientapp.service.MyFireBaseMessangingService">

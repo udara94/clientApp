@@ -25,6 +25,14 @@ public class BaseApplication extends MultiDexApplication {
 
     @Getter
     @Setter
+    private boolean loadPaymentDetailsScreen = false;
+
+    @Getter
+    @Setter
+    private boolean loadCashlessScreen = false;
+
+    @Getter
+    @Setter
     private boolean loadApplication = false;
 
     @Override

@@ -145,7 +145,7 @@ public class MyNotificationManager {
 
     private int getNotificationIcon() {
         boolean useWhiteIcon = (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP);
-        return useWhiteIcon ? R.drawable.ic_launcher_background : R.mipmap.ic_launcher;
+        return useWhiteIcon ? R.drawable.ic_launcher_foreground : R.mipmap.ic_launcher;
     }
 
     public int generateRandom() {

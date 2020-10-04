@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:clickable="true"
+    android:background="@color/colorWhite"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+    <LinearLayout
+        android:layout_margin="30dp"
+        android:layout_below="@id/toolbar"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RadioGroup
+            android:layout_marginTop="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioGroup">
+
+            <RadioButton
+                android:layout_margin="20dp"
+                android:id="@+id/radio_cash_payment"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="  Cash Payment"
+                android:layout_marginTop="10dp"
+                android:checked="true"
+                android:textSize="20dp" />
+
+            <RadioButton
+                android:layout_margin="20dp"
+                android:id="@+id/radio_casheless_payment"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="  Cashless Payment"
+                android:layout_marginTop="20dp"
+                android:checked="false"
+                android:textSize="20dp" />
+        </RadioGroup>
+
+    </LinearLayout>
+
+
+
+    <Button
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:textColor="@color/colorWhite"
+        android:id="@+id/btn_proceed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Proceed"
+        android:textSize="18dp"
+        android:background="@drawable/button_drawable"
+        android:layout_margin="50dp"
+        />
+</RelativeLayout>

@@ -2,6 +2,8 @@ package com.example.clientapp.ui.fragment;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.example.clientapp.BaseApplication;
 import com.example.clientapp.R;
 import com.example.clientapp.model.dto.Item;
 import com.example.clientapp.ui.activity.MainActivity;
@@ -74,6 +77,8 @@ public class ItemDetailsFragment extends BaseFragment implements BaseBackPressed
     @BindView(R.id.txt_quantity) EditText txtQuantity;
     @BindView(R.id.btn_reduce) Button btnReduce;
     @BindView(R.id.btn_add) Button btnAdd;
+    @BindView(R.id.txt_total_amount) TextView txtTotal;
+    @BindView(R.id.txt_table_no) EditText txtTableNo;
 
 
     @Override
@@ -111,6 +116,8 @@ public class ItemDetailsFragment extends BaseFragment implements BaseBackPressed
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("cart");
         txtQuantity.setText("1");
         mQuantity = 1;
+        txtTotal.setText("Rs "+mItem.getItemPrice()+"/=");
+        mItem.setItemQty(mQuantity);
 
         if (mItem != null) {
 
@@ -161,8 +168,18 @@ public class ItemDetailsFragment extends BaseFragment implements BaseBackPressed
             btnAddToCart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                       // ((MainActivity) getActivity()).addToCart(mItem);
-                    addToCart();
+                    String table = txtTableNo.getText().toString();
+                    if(table != null && !table.isEmpty()){
+                        mItem.setTableNo(table);
+                        if (!BaseApplication.getBaseApplication().isLoadPaymentDetailsScreen()) {
+                            BaseApplication.getBaseApplication().setLoadPaymentDetailsScreen(true);
+                            gotoPaymentDetailsFragment();
+                        }
+                    }else {
+                        //Toast.makeText(getContext(), "Please Enter Table Number",Toast.LENGTH_LONG).show();
+                        showSnackBar("Please Enter Table Number");
+                    }
+
                 }
             });
 
@@ -170,7 +187,7 @@ public class ItemDetailsFragment extends BaseFragment implements BaseBackPressed
                 @Override
                 public void onClick(View view) {
 
-                    gotoCartFragment();
+                   // gotoPaymentDetailsFragment();
                 }
             });
 
@@ -188,6 +205,24 @@ public class ItemDetailsFragment extends BaseFragment implements BaseBackPressed
                 }
             });
         }
+
+        txtQuantity.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                int quantity = Integer.parseInt(txtQuantity.getText().toString().trim());
+                setTotalAmount(quantity);
+            }
+        });
     }
 
     private void performAddOrReduce(boolean isReduce){
@@ -198,27 +233,31 @@ public class ItemDetailsFragment extends BaseFragment implements BaseBackPressed
                 quantity = quantity -1;
                 txtQuantity.setText(Integer.toString(quantity));
                 mQuantity = quantity;
+                setTotalAmount(quantity);
             }
         }else {
             quantity = quantity + 1;
             txtQuantity.setText(Integer.toString(quantity));
             mQuantity = quantity;
+            setTotalAmount(quantity);
         }
     }
 
-    //add to items to the db
-    private  void addToCart(){
-        String id = mDatabaseReference.push().getKey();
-        mItem.setId(id);
-        mItem.setItemQty(mQuantity);
-        mDatabaseReference.child(id).setValue(mItem);
-        Toast.makeText(getActivity(), "Item added to the cart", Toast.LENGTH_LONG).show();
 
+
+    private void setTotalAmount(int quantity){
+        float itemprice = Float.parseFloat(mItem.getItemPrice());
+        float totalPrice = itemprice * quantity;
+        String s = String.format("%.2f", totalPrice);
+        txtTotal.setText("Rs "+s+ "/=");
+        mItem.setItemQty(quantity);
     }
 
 
-    private void gotoCartFragment(){
-        //((MainActivity) getActivity()).addFragment(new CartFragment().newInstance(), CartFragment.getTAG());
+
+
+    private void gotoPaymentDetailsFragment(){
+        ((MainActivity) getActivity()).addFragment(new PaymentFragment().newInstance(mItem), PaymentFragment.getTAG());
     }
 
 
@@ -243,6 +282,6 @@ public class ItemDetailsFragment extends BaseFragment implements BaseBackPressed
     public void onDestroyView() {
         super.onDestroyView();
         itemDetailsFragment = null;
-       // BaseApplication.getBaseApplication().setLoadItemDetailsScreen(false);
+        BaseApplication.getBaseApplication().setLoadItemDetailsScreen(false);
     }
 }

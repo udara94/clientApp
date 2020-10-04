@@ -87,8 +87,6 @@
     <string name="btn_retry">RETRY</string>
 
 
-
-
     <!-- Favourite Jobs Fragments -->
     <string name="title_fav_jobs">Favourite Jobs</string>
     <string name="lbl_empty_data">You don\'t have any favourite jobs</string>
@@ -100,7 +98,7 @@
     <!-- Job Role Select Bottom sheet -->
     <string name="title_bottom_sheet">Job Roles</string>
     <string name="lbl_select">Select</string>
-    
+
     <!-- Post job vacancy Fragment -->
     <string name="lbl_post_job_info">Are you an employer and having job vacancies. Send your job vacancy details to us we will post the job.</string>
     <string name="lbl_email">apic.jobz@gmail.com</string>
@@ -128,7 +126,6 @@
         <item>Notifications</item>
         <item>Settings</item>
     </string-array>
-
 
 
     <string name="activity_title_about_us">About Us</string>
@@ -159,5 +156,8 @@
 
     <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
     <string name="play_again">Play Again</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

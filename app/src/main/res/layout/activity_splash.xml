@@ -20,9 +20,9 @@
                 android:layout_margin="40dp"
                 android:layout_centerHorizontal="true"
                 android:id="@+id/logo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/side_menu_logo"/>
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:src="@drawable/header_logo"/>
             <TextView
                 android:layout_below="@id/logo"
                 android:id="@+id/app_name"
