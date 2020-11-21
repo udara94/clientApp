@@ -52,7 +52,7 @@ public class SplashActivity extends Activity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            classObj = MainActivity.class;
+                            classObj = UserActivity.class;
                             startActivity(new Intent(SplashActivity.this, classObj));
                             finish();
                         }

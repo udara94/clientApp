@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</LinearLayout>
+    <TextView
+        android:layout_centerInParent="true"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20dp"
+        android:id="@+id/lbl_user_select"
+        android:gravity="center"
+        android:text="Select User Type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <Spinner
+        android:background="@drawable/item_outline_drawable"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/lbl_user_select"
+        android:id="@+id/spinner"
+        android:layout_width="149dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        />
+    <Button
+        android:layout_alignParentBottom="true"
+        android:id="@+id/btn_done"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="40dp"
+        android:background="@drawable/button_drawable"
+        android:text="Done"
+        android:textColor="@color/colorWhite"
+        android:textSize="18dp" />
+
+</RelativeLayout>

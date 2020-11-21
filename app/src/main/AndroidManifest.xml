@@ -31,6 +31,11 @@
             android:name="com.example.clientapp.ui.activity.MainActivity">
 
         </activity>
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".ui.activity.UserActivity">
+
+        </activity>
 
         <service android:name="com.example.clientapp.service.MyFireBaseMessangingService">
             <intent-filter>
