@@ -162,7 +162,7 @@
                                 <EditText
                                     android:enabled="false"
                                     android:editable="false"
-                                    android:id="@+id/txt_quantity"
+                                    android:id="@+id/txt_quantity_order"
                                     android:layout_width="0dp"
                                     android:layout_height="55dp"
                                     android:layout_gravity="center"

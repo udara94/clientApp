@@ -10,8 +10,9 @@ import lombok.Setter;
 @Setter
 @Parcel
 public class Notification {
-    private String id;
+    private String cartId;
     private String message;
     private String tableNo;
     private String orderNo;
+    private int userType;
 }

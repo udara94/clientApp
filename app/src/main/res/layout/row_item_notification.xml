@@ -4,96 +4,82 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_marginBottom="10dp">
-
+    android:background="@drawable/item_outline_drawable"
+    android:layout_margin="10dp">
     <LinearLayout
-        android:id="@+id/item_row"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/horizontal_layout"
+        android:weightSum="4"
         android:orientation="horizontal"
-        android:weightSum="9">
-
-        <RelativeLayout
-            android:id="@+id/notification_img"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1.5">
-
-<!--            <ImageView-->
-<!--                android:id="@+id/image_url"-->
-<!--                android:layout_width="60dp"-->
-<!--                android:layout_height="60dp"-->
-<!--                android:layout_centerInParent="true" />-->
-
-            <com.makeramen.roundedimageview.RoundedImageView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/image_url"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:scaleType="fitXY"
-                app:riv_corner_radius="20dp"
-                android:layout_centerInParent="true"/>
-            <ProgressBar
-                android:id="@+id/image_progress"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:indeterminate="false"
-                android:elevation="10dp"/>
-        </RelativeLayout>
-
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <LinearLayout
-            android:id="@+id/message_layout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:gravity="center"
             android:layout_gravity="center"
-            android:layout_weight="6.5"
-            android:orientation="vertical">
-
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="18dp"
+                android:id="@+id/txt_order_number"
+                android:text="237"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
             <TextView
                 android:textStyle="bold"
-                android:id="@+id/txt_msg"
+                android:text="Order No"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18dp" />
-
-            <TextView
-                android:id="@+id/txt_job_role"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16dp" />
-
-            <TextView
-                android:layout_marginBottom="10dp"
-                android:id="@+id/txt_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="10dp" />
-
+                android:layout_height="wrap_content"/>
         </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:padding="10dp"
+            android:gravity="center"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:layout_gravity="center_vertical">
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_centerInParent="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/more" />
-        </RelativeLayout>
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="18dp"
+                android:id="@+id/txt_table_number"
+                android:text="2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:textStyle="bold"
+                android:text="Table No"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:padding="10dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:id="@+id/txt_message"
+                android:text="out of stock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
     </LinearLayout>
-    <ImageView
-
-        android:layout_centerHorizontal="true"
-        android:layout_alignBottom="@+id/item_row"
+    <Button
+        android:visibility="gone"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@+id/horizontal_layout"
+        android:id="@+id/btn_cancel_order"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/line"/>
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:background="@drawable/button_drawable"
+        android:text="Cancel Order"
+        android:textColor="@color/colorWhite"
+        android:textSize="18dp" />
 </RelativeLayout>

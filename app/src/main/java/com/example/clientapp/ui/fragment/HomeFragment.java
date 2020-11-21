@@ -17,6 +17,7 @@ import com.example.clientapp.BaseApplication;
 import com.example.clientapp.R;
 import com.example.clientapp.common.CommonUtils;
 import com.example.clientapp.common.constants.ApplicationConstants;
+import com.example.clientapp.helpers.FirebaseHelper;
 import com.example.clientapp.model.dto.Item;
 import com.example.clientapp.ui.activity.MainActivity;
 import com.example.clientapp.ui.adapter.ItemListAdapter;
@@ -50,6 +51,7 @@ public class HomeFragment extends BaseFragment implements BaseBackPressedListene
     private Context mContext;
 
     RecyclerView mRecyclerView;
+    private FirebaseHelper firebaseHelper;
     private DatabaseReference mDatabaseReference;
 
 
@@ -75,6 +77,7 @@ public class HomeFragment extends BaseFragment implements BaseBackPressedListene
 
     @Override
     protected void setUpUI() {
+        firebaseHelper = new FirebaseHelper();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("itemList");
         performGetItemsRequest();
     }
@@ -89,7 +92,7 @@ public class HomeFragment extends BaseFragment implements BaseBackPressedListene
         mCustomView.findViewById(R.id.notification).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                gotoNotification();
             }
         });
 
@@ -124,28 +127,31 @@ public class HomeFragment extends BaseFragment implements BaseBackPressedListene
 
     //get food items from the database
     private void getItemList(){
-
-        mDatabaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds: dataSnapshot.getChildren()) {
-                    Item item = ds.getValue(Item.class);
-                    if(item != null){
-                        mItemList.add(item);
-                    }
-                }
-                if(mItemList.size() > 0 ){
-                    showItemList(mItemList);
-                }
-                setProgressDialog(false);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                setProgressDialog(false);
-            }
-        });
+        mDatabaseReference.addValueEventListener(valueEventListener);
     }
+
+
+
+    ValueEventListener valueEventListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            for (DataSnapshot ds: dataSnapshot.getChildren()) {
+                Item item = ds.getValue(Item.class);
+                if(item != null){
+                    mItemList.add(item);
+                }
+            }
+            if(mItemList.size() > 0 ){
+                showItemList(mItemList);
+            }
+            setProgressDialog(false);
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+            setProgressDialog(false);
+        }
+    };
 
     private  void initRecyclerViwe(){
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -174,6 +180,14 @@ public class HomeFragment extends BaseFragment implements BaseBackPressedListene
 
     public void gotoItemDetailScreen(Item item){
         ((MainActivity) getActivity()).addFragment(new ItemDetailsFragment().newInstance(item), ItemDetailsFragment.getTAG());
+    }
+
+    public void gotoNotification(){
+        if (!BaseApplication.getBaseApplication().isLoadNotificationScreen()) {
+            BaseApplication.getBaseApplication().setLoadNotificationScreen(true);
+            ((MainActivity) getActivity()).addFragment(new NotificationFragment().newInstance(), NotificationFragment.getTAG());
+        }
+
     }
 
 

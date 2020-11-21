@@ -22,6 +22,7 @@ import com.example.clientapp.R;
 import com.example.clientapp.common.CommonUtils;
 import com.example.clientapp.common.constants.ApplicationConstants;
 import com.example.clientapp.model.dto.Item;
+import com.example.clientapp.model.dto.Notification;
 import com.example.clientapp.utils.BaseBackPressedListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -57,6 +58,7 @@ public class CashlessFragment extends BaseFragment implements BaseBackPressedLis
     public static CashlessFragment cashlessFragment;
     private Item mItem;
     private DatabaseReference mDatabaseReference;
+    private DatabaseReference mNotificationReference;
 
 
     @BindView(R.id.btn_proceed) Button btnProceed;
@@ -96,6 +98,7 @@ public class CashlessFragment extends BaseFragment implements BaseBackPressedLis
     @Override
     protected void setUpUI() {
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("cart");
+        mNotificationReference = FirebaseDatabase.getInstance().getReference("NotificationList");
 
         btnProceed.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,10 +118,22 @@ public class CashlessFragment extends BaseFragment implements BaseBackPressedLis
         if(mId != null){
             String id = mId;
             mItem.setId(id);
-            System.out.println("==============>>id"+ id);
             mDatabaseReference.child(id).setValue(mItem);
+            addNotification(mItem);
             Toast.makeText(getActivity(), "Item added to the cart", Toast.LENGTH_LONG).show();
         }
+
+    }
+
+    private void addNotification(Item item){
+        Notification notification = new Notification();
+        notification.setCartId(item.getId());
+        notification.setTableNo(item.getTableNo());
+        notification.setOrderNo(item.getTableNo());
+        notification.setMessage("Create Order");
+        notification.setUserType(1);
+        String id = mItem.getId();
+        mNotificationReference.child(id).setValue(notification);
 
     }
 

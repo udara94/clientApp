@@ -18,6 +18,7 @@ import com.example.clientapp.R;
 import com.example.clientapp.common.CommonUtils;
 import com.example.clientapp.common.constants.ApplicationConstants;
 import com.example.clientapp.model.dto.Item;
+import com.example.clientapp.model.dto.Notification;
 import com.example.clientapp.ui.activity.MainActivity;
 import com.example.clientapp.utils.BaseBackPressedListener;
 import com.google.firebase.database.DatabaseReference;
@@ -56,6 +57,7 @@ public class PaymentFragment extends BaseFragment implements BaseBackPressedList
     @BindView(R.id.radio_casheless_payment) RadioButton radioCashless;
 
     private DatabaseReference mDatabaseReference;
+    private DatabaseReference mNotificationReference;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,6 +90,8 @@ public class PaymentFragment extends BaseFragment implements BaseBackPressedList
     protected void setUpUI() {
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("cart");
+        mNotificationReference = FirebaseDatabase.getInstance().getReference("NotificationList");
+
         btnProceed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,7 +118,20 @@ public class PaymentFragment extends BaseFragment implements BaseBackPressedList
         String id = mDatabaseReference.push().getKey();
         mItem.setId(id);
         mDatabaseReference.child(id).setValue(mItem);
+        addNotification(mItem);
         Toast.makeText(getActivity(), "Item added to the cart", Toast.LENGTH_LONG).show();
+    }
+
+    private void addNotification(Item item){
+        Notification notification = new Notification();
+        notification.setCartId(item.getId());
+        notification.setTableNo(item.getTableNo());
+        notification.setOrderNo(item.getTableNo());
+        notification.setMessage("Create Order");
+        notification.setUserType(1);
+        String id = mItem.getId();
+        mNotificationReference.child(id).setValue(notification);
+
     }
 
     private void  gotoCashlessFragment(){
