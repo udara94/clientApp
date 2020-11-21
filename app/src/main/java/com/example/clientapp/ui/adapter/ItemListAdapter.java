@@ -114,7 +114,6 @@ public class ItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             itemList.add(messageList.get(i));
             notifyItemInserted(getItemCount());
         }
-
     }
 
     @Override

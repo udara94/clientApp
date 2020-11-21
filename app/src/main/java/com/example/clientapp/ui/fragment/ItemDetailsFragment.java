@@ -68,7 +68,6 @@ public class ItemDetailsFragment extends BaseFragment implements BaseBackPressed
     //@BindView(R.id.txt_description) TextView txtItemDescription;
 
     @BindView(R.id.header_image) ImageView mImageView;
-    @BindView(R.id.shopping_cart) ImageView mbtnCart;
     @BindView(R.id.image_progress) ProgressBar imageProgress;
     @BindView(R.id.collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbarLayout;
@@ -173,7 +172,7 @@ public class ItemDetailsFragment extends BaseFragment implements BaseBackPressed
                         mItem.setTableNo(table);
                         if (!BaseApplication.getBaseApplication().isLoadPaymentDetailsScreen()) {
                             BaseApplication.getBaseApplication().setLoadPaymentDetailsScreen(true);
-                            gotoPaymentDetailsFragment();
+                            gotoPaymentDetailsScreen(mItem);
                         }
                     }else {
                         //Toast.makeText(getContext(), "Please Enter Table Number",Toast.LENGTH_LONG).show();
@@ -183,13 +182,6 @@ public class ItemDetailsFragment extends BaseFragment implements BaseBackPressed
                 }
             });
 
-            mbtnCart.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                   // gotoPaymentDetailsFragment();
-                }
-            });
 
             btnAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -219,10 +211,18 @@ public class ItemDetailsFragment extends BaseFragment implements BaseBackPressed
 
             @Override
             public void afterTextChanged(Editable editable) {
-                int quantity = Integer.parseInt(txtQuantity.getText().toString().trim());
-                setTotalAmount(quantity);
+                if(txtQuantity.getText() != null && !txtQuantity.getText().toString().isEmpty()){
+                    int quantity = Integer.parseInt(txtQuantity.getText().toString().trim());
+                    setTotalAmount(quantity);
+                }
+
             }
         });
+    }
+
+
+    public void gotoPaymentDetailsScreen(Item item){
+        ((MainActivity) getActivity()).addFragment(new PaymentFragment().newInstance(item), PaymentFragment.getTAG());
     }
 
     private void performAddOrReduce(boolean isReduce){
@@ -252,15 +252,6 @@ public class ItemDetailsFragment extends BaseFragment implements BaseBackPressed
         txtTotal.setText("Rs "+s+ "/=");
         mItem.setItemQty(quantity);
     }
-
-
-
-
-    private void gotoPaymentDetailsFragment(){
-        ((MainActivity) getActivity()).addFragment(new PaymentFragment().newInstance(mItem), PaymentFragment.getTAG());
-    }
-
-
 
     @Override
     protected void setUpToolBar() {

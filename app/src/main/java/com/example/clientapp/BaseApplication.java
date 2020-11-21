@@ -25,6 +25,14 @@ public class BaseApplication extends MultiDexApplication {
 
     @Getter
     @Setter
+    private boolean loadNotificationScreen = false;
+
+    @Getter
+    @Setter
+    private boolean loadOrderDetailsScreen = false;
+
+    @Getter
+    @Setter
     private boolean loadPaymentDetailsScreen = false;
 
     @Getter
@@ -34,6 +42,12 @@ public class BaseApplication extends MultiDexApplication {
     @Getter
     @Setter
     private boolean loadApplication = false;
+
+    @Getter
+    @Setter
+    private int userType = 0;
+
+
 
     @Override
     public void onCreate() {

@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.clientapp.BaseApplication;
 import com.example.clientapp.R;
 import com.example.clientapp.common.CommonUtils;
 import com.example.clientapp.common.constants.ApplicationConstants;
@@ -174,4 +175,7 @@ public class HomeFragment extends BaseFragment implements BaseBackPressedListene
     public void gotoItemDetailScreen(Item item){
         ((MainActivity) getActivity()).addFragment(new ItemDetailsFragment().newInstance(item), ItemDetailsFragment.getTAG());
     }
+
+
+
 }

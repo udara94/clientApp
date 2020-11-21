@@ -19,4 +19,5 @@ public class Item {
     private String itemDiscount;
     private String[] itemTypes;
     private int itemQty;
+    private String itemStatus;
 }
