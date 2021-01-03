@@ -27,13 +27,34 @@
         android:textStyle="bold"
         android:textSize="16dp"/>
 
-    <ImageView
-        android:layout_marginRight="20dp"
-        android:id="@+id/notification"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+
+    <RelativeLayout
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/menu_notification"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginRight="20dp"
+            android:id="@+id/notification"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/menu_notification"/>
+        <TextView
+            android:visibility="gone"
+            android:gravity="center"
+            android:layout_marginEnd="-5dp"
+            android:layout_marginRight="-5dp"
+            android:layout_marginTop="3dp"
+            android:id="@+id/cart_badge"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="right|end|top"
+            android:background="@drawable/badge_background"
+            android:padding="3dp"
+            android:textColor="@android:color/white"
+            android:text="0"
+            android:textSize="10sp"/>
+    </RelativeLayout>
+
 
 </RelativeLayout>

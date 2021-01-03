@@ -54,11 +54,11 @@ public class MainActivity extends BaseActivity {
     Uri URI = null;
     String FileName = null;
 
-    private NavigationView navigationView;
+    //private NavigationView navigationView;
     private DrawerLayout drawer;
     private View navHeader;
-    private ImageView imgNavHeaderBg, imgProfile;
-    private TextView txtName, txtWebsite;
+    //private ImageView imgNavHeaderBg, imgProfile;
+    //private TextView txtName, txtWebsite;
 
 
     public static int navItemIndex = 0;
@@ -108,19 +108,19 @@ public class MainActivity extends BaseActivity {
         mHandler = new Handler();
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+       // navigationView = (NavigationView) findViewById(R.id.nav_view);
 
-        navHeader = navigationView.getHeaderView(0);
-        txtName = (TextView) navHeader.findViewById(R.id.name);
-        txtWebsite = (TextView) navHeader.findViewById(R.id.website);
-        imgNavHeaderBg = (ImageView) navHeader.findViewById(R.id.img_header_bg);
+       // navHeader = navigationView.getHeaderView(0);
+        //txtName = (TextView) navHeader.findViewById(R.id.name);
+        //txtWebsite = (TextView) navHeader.findViewById(R.id.website);
+        //imgNavHeaderBg = (ImageView) navHeader.findViewById(R.id.img_header_bg);
 
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
 
-        loadNavHeader();
+        //loadNavHeader();
 
         // initializing navigation menu
-        setUpNavigationView();
+        //setUpNavigationView();
 
         preferences = getSharedPreferences(getPackageName(), MODE_PRIVATE);
         LocalBroadcastManager.getInstance(this).registerReceiver(mHandlerFCM, new IntentFilter("com.eyepax.traveller_FCM-MESSAGE"));
@@ -159,21 +159,21 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    private void loadNavHeader() {
-
-        // loading header background image
-        Glide.with(this).load(getResources().getIdentifier("header_logo", "drawable", this.getPackageName()))
-                .crossFade()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(imgNavHeaderBg);
-
-        // showing dot next to notifications label
-//        navigationView.getMenu().getItem(3).setActionView(R.layout.menu_dot);
-    }
+//    private void loadNavHeader() {
+//
+//        // loading header background image
+//        Glide.with(this).load(getResources().getIdentifier("header_logo", "drawable", this.getPackageName()))
+//                .crossFade()
+//                .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                .into(imgNavHeaderBg);
+//
+//        // showing dot next to notifications label
+////        navigationView.getMenu().getItem(3).setActionView(R.layout.menu_dot);
+//    }
 
     private void loadHomeFragment() {
         // selecting appropriate nav menu item
-        selectNavMenu();
+        //selectNavMenu();
 
 
         // if user select the current navigation menu again, don't do anything
@@ -242,47 +242,47 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    private void selectNavMenu() {
-        navigationView.getMenu().getItem(navItemIndex).setChecked(true);
-    }
-    private void setUpNavigationView() {
-        //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-
-            // This method will trigger on item Click of navigation menu
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-
-                //Check to see which item was being clicked and perform appropriate action
-                switch (menuItem.getItemId()) {
-                    //Replacing the main content with ContentFragment Which is our Inbox View;
-                    case R.id.nav_home:
-                        navItemIndex = 0;
-                        CURRENT_TAG = TAG_HOME;
-                        break;
-                    case R.id.nav_notifications:
-                        navItemIndex = 1;
-                        CURRENT_TAG = TAG_NOTIFICATIONS;
-                        break;
-                    default:
-                        navItemIndex = 0;
-                }
-
-                //Checking if the item is in checked state or not, if not make it in checked state
-                if (menuItem.isChecked()) {
-                    menuItem.setChecked(false);
-                } else {
-                    menuItem.setChecked(true);
-                }
-                menuItem.setChecked(true);
-
-                loadHomeFragment();
-
-                return true;
-            }
-        });
-
-    }
+//    private void selectNavMenu() {
+//        navigationView.getMenu().getItem(navItemIndex).setChecked(true);
+//    }
+//    private void setUpNavigationView() {
+//        //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
+//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//
+//            // This method will trigger on item Click of navigation menu
+//            @Override
+//            public boolean onNavigationItemSelected(MenuItem menuItem) {
+//
+//                //Check to see which item was being clicked and perform appropriate action
+//                switch (menuItem.getItemId()) {
+//                    //Replacing the main content with ContentFragment Which is our Inbox View;
+//                    case R.id.nav_home:
+//                        navItemIndex = 0;
+//                        CURRENT_TAG = TAG_HOME;
+//                        break;
+//                    case R.id.nav_notifications:
+//                        navItemIndex = 1;
+//                        CURRENT_TAG = TAG_NOTIFICATIONS;
+//                        break;
+//                    default:
+//                        navItemIndex = 0;
+//                }
+//
+//                //Checking if the item is in checked state or not, if not make it in checked state
+//                if (menuItem.isChecked()) {
+//                    menuItem.setChecked(false);
+//                } else {
+//                    menuItem.setChecked(true);
+//                }
+//                menuItem.setChecked(true);
+//
+//                loadHomeFragment();
+//
+//                return true;
+//            }
+//        });
+//
+//    }
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static void setStatusBarGradiant(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

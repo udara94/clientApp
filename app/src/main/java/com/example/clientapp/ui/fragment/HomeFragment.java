@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +21,7 @@ import com.example.clientapp.common.CommonUtils;
 import com.example.clientapp.common.constants.ApplicationConstants;
 import com.example.clientapp.helpers.FirebaseHelper;
 import com.example.clientapp.model.dto.Item;
+import com.example.clientapp.model.dto.Notification;
 import com.example.clientapp.ui.activity.MainActivity;
 import com.example.clientapp.ui.adapter.ItemListAdapter;
 import com.example.clientapp.utils.BaseBackPressedListener;
@@ -48,11 +51,16 @@ public class HomeFragment extends BaseFragment implements BaseBackPressedListene
 
     private ItemListAdapter itemListAdapter;
     private List<Item> mItemList = new ArrayList<>();
+    private List<Notification> notificationList = new ArrayList<>();
     private Context mContext;
 
     RecyclerView mRecyclerView;
     private FirebaseHelper firebaseHelper;
     private DatabaseReference mDatabaseReference;
+    private DatabaseReference mCartReference;
+    MutableLiveData<String> listenText = new MutableLiveData<>();
+
+    private String notificationCount = "0";
 
 
     @Override
@@ -78,8 +86,11 @@ public class HomeFragment extends BaseFragment implements BaseBackPressedListene
     @Override
     protected void setUpUI() {
         firebaseHelper = new FirebaseHelper();
+        mCartReference = FirebaseDatabase.getInstance().getReference("NotificationList");
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("itemList");
         performGetItemsRequest();
+        performGetNotificationRequest();
+        listenText.setValue("0");
     }
 
 
@@ -88,6 +99,7 @@ public class HomeFragment extends BaseFragment implements BaseBackPressedListene
     protected void setUpToolBar() {
         View mCustomView = getLayoutInflater().inflate(R.layout.custom_action_bar_home, null);
         TextView title = (TextView) mCustomView.findViewById(R.id.title);
+        TextView count = (TextView) mCustomView.findViewById(R.id.cart_badge);
         mToolBar.addView(mCustomView);
         mCustomView.findViewById(R.id.notification).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,11 +111,20 @@ public class HomeFragment extends BaseFragment implements BaseBackPressedListene
         mCustomView.findViewById(R.id.menu_icon).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) mContext).openDrawer();
+               // ((MainActivity) mContext).openDrawer();
+            }
+        });
+        listenText.observe(getActivity(),new Observer<String>() {
+            @Override
+            public void onChanged(String changedValue) {
+                if(!changedValue.equals("0")){
+                    count.setVisibility(View.VISIBLE);
+                    count.setText(changedValue);
+                }
             }
         });
         title.setTypeface(CommonUtils.getInstance().getFont(getActivity(), ApplicationConstants.FONT_ROBOTO_BOLD));
-        title.setText("Ministry of Crab");
+        title.setText("Mini Crab");
         Toolbar parent =(Toolbar) mCustomView.getParent();
         parent.setPadding(0,0,0,0);//for tab otherwise give space in tab
         parent.setContentInsetsAbsolute(0,0);
@@ -189,6 +210,43 @@ public class HomeFragment extends BaseFragment implements BaseBackPressedListene
         }
 
     }
+
+    private void performGetNotificationRequest() {
+        if (CommonUtils.getInstance().isNetworkConnected()) {
+            //setProgressDialog(true);
+            getNotificationList();
+        } else {
+            showAlertDialog(false, ApplicationConstants.WARNING,
+                    ApplicationConstants.ERROR_MSG_CONNECTION_LOST, null);
+        }
+    }
+
+    private void getNotificationList(){
+        mCartReference.addValueEventListener(notificationListner);
+    }
+
+    ValueEventListener notificationListner = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            int userType = BaseApplication.getBaseApplication().getUserType();
+            for (DataSnapshot ds: dataSnapshot.getChildren()) {
+                Notification item = ds.getValue(Notification.class);
+                if(item != null && item.getUserType() == userType){
+                    notificationList.add(item);
+                }
+            }
+            if(notificationList.size() > 0){
+                listenText.setValue( notificationList.size()+"");
+                notificationCount = notificationList.size()+"";
+            }
+            //setProgressDialog(false);
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+            setProgressDialog(false);
+        }
+    };
 
 
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Client App</string>
+    <string name="app_name">Mini Crab</string>
 
     <!-- Splash Screen -->
     <string name="lbl_powerd_by">Powered by Flicker</string>
