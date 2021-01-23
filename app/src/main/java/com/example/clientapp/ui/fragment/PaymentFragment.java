@@ -28,6 +28,9 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -41,7 +44,7 @@ public class PaymentFragment extends BaseFragment implements BaseBackPressedList
         return "ItemDetailsFragment";
     }
 
-    public static PaymentFragment newInstance(Item item) {
+    public static PaymentFragment newInstance(List<Item> item) {
         PaymentFragment fragment = new PaymentFragment();
         Bundle args = new Bundle();
         args.putParcelable(BUNDLE_EXTRA, Parcels.wrap(item));
@@ -50,7 +53,7 @@ public class PaymentFragment extends BaseFragment implements BaseBackPressedList
     }
 
     public static PaymentFragment paymentFragment;
-    private  Item mItem;
+    private  List<Item> mItem = new ArrayList<>();
 
     @BindView(R.id.btn_proceed) Button btnProceed;
     @BindView(R.id.radio_cash_payment) RadioButton radioCash;
@@ -104,7 +107,7 @@ public class PaymentFragment extends BaseFragment implements BaseBackPressedList
         if(radioCash.isChecked()){
             addToCart();
             getFragmentManager().popBackStack();
-            getFragmentManager().popBackStack();
+            ((MainActivity) getActivity()).replaceFragment(new HomeFragment().newInstance());
         }else {
             if (!BaseApplication.getBaseApplication().isLoadCashlessScreen()) {
                 BaseApplication.getBaseApplication().setLoadCashlessScreen(true);
@@ -115,10 +118,14 @@ public class PaymentFragment extends BaseFragment implements BaseBackPressedList
 
     //add to items to the db
     private  void addToCart(){
-        String id = mDatabaseReference.push().getKey();
-        mItem.setId(id);
-        mDatabaseReference.child(id).setValue(mItem);
-        addNotification(mItem);
+        for (Item item : mItem) {
+            //String id = mDatabaseReference.push().getKey();
+            //item.setId(id);
+            //mDatabaseReference.child(id).setValue(item);
+            item.setPaid("Y");
+            mDatabaseReference.child(item.getId()).setValue(item);
+            addNotification(item);
+        }
         Toast.makeText(getActivity(), "Item added to the cart", Toast.LENGTH_LONG).show();
     }
 
@@ -129,7 +136,7 @@ public class PaymentFragment extends BaseFragment implements BaseBackPressedList
         notification.setOrderNo(item.getTableNo());
         notification.setMessage("Create Order");
         notification.setUserType(1);
-        String id = mItem.getId();
+        String id = item.getId();
         mNotificationReference.child(id).setValue(notification);
 
     }

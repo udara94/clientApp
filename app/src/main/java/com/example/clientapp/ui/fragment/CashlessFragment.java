@@ -34,6 +34,9 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -47,7 +50,7 @@ public class CashlessFragment extends BaseFragment implements BaseBackPressedLis
         return "CashlessFragment";
     }
 
-    public static CashlessFragment newInstance(Item item) {
+    public static CashlessFragment newInstance(List<Item> item) {
         CashlessFragment fragment = new CashlessFragment();
         Bundle args = new Bundle();
         args.putParcelable(BUNDLE_EXTRA, Parcels.wrap(item));
@@ -56,7 +59,7 @@ public class CashlessFragment extends BaseFragment implements BaseBackPressedLis
     }
 
     public static CashlessFragment cashlessFragment;
-    private Item mItem;
+    private List<Item> mItem = new ArrayList<>();
     private DatabaseReference mDatabaseReference;
     private DatabaseReference mNotificationReference;
 
@@ -114,15 +117,15 @@ public class CashlessFragment extends BaseFragment implements BaseBackPressedLis
 
     //add to items to the db
     private  void addToCart(){
-       // String id = mDatabaseReference.push().getKey();
-        if(mId != null){
-            String id = mId;
-            mItem.setId(id);
-            mDatabaseReference.child(id).setValue(mItem);
-            addNotification(mItem);
-            Toast.makeText(getActivity(), "Item added to the cart", Toast.LENGTH_LONG).show();
+        //String id = mDatabaseReference.push().getKey();
+        for (Item item : mItem) {
+            //item.setId(id);
+            //mDatabaseReference.child(id).setValue(item);
+            item.setPaid("Y");
+            mDatabaseReference.child(item.getId()).setValue(item);
+            addNotification(item);
         }
-
+        Toast.makeText(getActivity(), "Item added to the cart", Toast.LENGTH_LONG).show();
     }
 
     private void addNotification(Item item){
@@ -132,16 +135,15 @@ public class CashlessFragment extends BaseFragment implements BaseBackPressedLis
         notification.setOrderNo(item.getTableNo());
         notification.setMessage("Create Order");
         notification.setUserType(1);
-        String id = mItem.getId();
+        String id = item.getId();
         mNotificationReference.child(id).setValue(notification);
 
     }
 
     private void generateBarcode(){
-        String id = mDatabaseReference.push().getKey();
-        mId = id;
-        System.out.println("==============>>id"+ mId);
-        String text = id; // Whatever you need to encode in the QR code
+        //String id = mDatabaseReference.push().getKey();
+        mId = "92348948239392382";
+        String text = mId; // Whatever you need to encode in the QR code
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try {
             BitMatrix bitMatrix = multiFormatWriter.encode(text, BarcodeFormat.QR_CODE,200,200);

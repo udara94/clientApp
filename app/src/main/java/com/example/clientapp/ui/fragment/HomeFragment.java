@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -52,15 +53,21 @@ public class HomeFragment extends BaseFragment implements BaseBackPressedListene
     private ItemListAdapter itemListAdapter;
     private List<Item> mItemList = new ArrayList<>();
     private List<Notification> notificationList = new ArrayList<>();
+    private List<Item> mCartList = new ArrayList<>();
     private Context mContext;
 
     RecyclerView mRecyclerView;
     private FirebaseHelper firebaseHelper;
     private DatabaseReference mDatabaseReference;
+    private DatabaseReference mNotificationReference;
     private DatabaseReference mCartReference;
-    MutableLiveData<String> listenText = new MutableLiveData<>();
+
+    MutableLiveData<String> listenNotificationText = new MutableLiveData<>();
+    MutableLiveData<String> listenCartText = new MutableLiveData<>();
 
     private String notificationCount = "0";
+    private String cartCount = "0";
+    private boolean isGotoCart = false;
 
 
     @Override
@@ -85,12 +92,7 @@ public class HomeFragment extends BaseFragment implements BaseBackPressedListene
 
     @Override
     protected void setUpUI() {
-        firebaseHelper = new FirebaseHelper();
-        mCartReference = FirebaseDatabase.getInstance().getReference("NotificationList");
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference("itemList");
-        performGetItemsRequest();
-        performGetNotificationRequest();
-        listenText.setValue("0");
+
     }
 
 
@@ -100,6 +102,10 @@ public class HomeFragment extends BaseFragment implements BaseBackPressedListene
         View mCustomView = getLayoutInflater().inflate(R.layout.custom_action_bar_home, null);
         TextView title = (TextView) mCustomView.findViewById(R.id.title);
         TextView count = (TextView) mCustomView.findViewById(R.id.cart_badge);
+        TextView cartCount = (TextView) mCustomView.findViewById(R.id.cart_notification);
+        RelativeLayout cartLayout = (RelativeLayout) mCustomView.findViewById(R.id.cart_layout);
+
+
         mToolBar.addView(mCustomView);
         mCustomView.findViewById(R.id.notification).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,18 +114,33 @@ public class HomeFragment extends BaseFragment implements BaseBackPressedListene
             }
         });
 
-        mCustomView.findViewById(R.id.menu_icon).setOnClickListener(new View.OnClickListener() {
+        mCustomView.findViewById(R.id.cart).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // ((MainActivity) mContext).openDrawer();
+               gotoCart();
             }
         });
-        listenText.observe(getActivity(),new Observer<String>() {
+        int userType = BaseApplication.getBaseApplication().getUserType();
+        cartLayout.setVisibility(View.GONE);
+        if(userType != 0){
+            cartLayout.setVisibility(View.GONE);
+        }
+        listenNotificationText.observe(getActivity(),new Observer<String>() {
             @Override
             public void onChanged(String changedValue) {
                 if(!changedValue.equals("0")){
                     count.setVisibility(View.VISIBLE);
                     count.setText(changedValue);
+                }
+            }
+        });
+        listenCartText.observe(getActivity(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if(!s.equals("0")){
+                    cartLayout.setVisibility(View.VISIBLE);
+                    cartCount.setVisibility(View.VISIBLE);
+                    cartCount.setText(s);
                 }
             }
         });
@@ -199,6 +220,24 @@ public class HomeFragment extends BaseFragment implements BaseBackPressedListene
         mContext = context;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        firebaseHelper = new FirebaseHelper();
+        mNotificationReference = FirebaseDatabase.getInstance().getReference("NotificationList");
+        mCartReference = FirebaseDatabase.getInstance().getReference("cart");
+
+        int userType = BaseApplication.getBaseApplication().getUserType();
+        if(userType == 0){
+            mDatabaseReference = FirebaseDatabase.getInstance().getReference("itemList");
+            performGetItemsRequest();
+            performGetCartRequest();
+        }
+
+        listenNotificationText.setValue("0");
+        listenCartText.setValue("0");
+    }
+
     public void gotoItemDetailScreen(Item item){
         ((MainActivity) getActivity()).addFragment(new ItemDetailsFragment().newInstance(item), ItemDetailsFragment.getTAG());
     }
@@ -208,7 +247,15 @@ public class HomeFragment extends BaseFragment implements BaseBackPressedListene
             BaseApplication.getBaseApplication().setLoadNotificationScreen(true);
             ((MainActivity) getActivity()).addFragment(new NotificationFragment().newInstance(), NotificationFragment.getTAG());
         }
+    }
 
+    public void gotoCart(){
+        isGotoCart = true;
+        mCartReference.removeEventListener(cartListener);
+        if (!BaseApplication.getBaseApplication().isLoadCartScreen()) {
+            BaseApplication.getBaseApplication().setLoadCartScreen(true);
+            ((MainActivity) getActivity()).replaceFragment(new CartFragment().newInstance(mCartList));
+        }
     }
 
     private void performGetNotificationRequest() {
@@ -222,7 +269,7 @@ public class HomeFragment extends BaseFragment implements BaseBackPressedListene
     }
 
     private void getNotificationList(){
-        mCartReference.addValueEventListener(notificationListner);
+        mNotificationReference.addValueEventListener(notificationListner);
     }
 
     ValueEventListener notificationListner = new ValueEventListener() {
@@ -236,7 +283,7 @@ public class HomeFragment extends BaseFragment implements BaseBackPressedListene
                 }
             }
             if(notificationList.size() > 0){
-                listenText.setValue( notificationList.size()+"");
+                listenNotificationText.setValue( notificationList.size()+"");
                 notificationCount = notificationList.size()+"";
             }
             //setProgressDialog(false);
@@ -248,6 +295,52 @@ public class HomeFragment extends BaseFragment implements BaseBackPressedListene
         }
     };
 
+
+    private void performGetCartRequest() {
+        if (CommonUtils.getInstance().isNetworkConnected()) {
+            //setProgressDialog(true);
+            getCartList();
+        } else {
+            showAlertDialog(false, ApplicationConstants.WARNING,
+                    ApplicationConstants.ERROR_MSG_CONNECTION_LOST, null);
+        }
+    }
+
+    private void getCartList(){
+        mCartReference.addValueEventListener(cartListener);
+        mCartReference.keepSynced(true);
+        //mCartReference.addChildEventListener(cartListener)
+        //mCartReference.addListenerForSingleValueEvent(cartListener);
+    }
+
+    ValueEventListener cartListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            mCartList.clear();
+            cartCount = "0";
+            listenCartText.setValue( "0");
+            for (DataSnapshot ds: dataSnapshot.getChildren()) {
+                Item item = ds.getValue(Item.class);
+                if(item.getPaid().equals("N")){
+                    mCartList.add(item);
+                }
+            }
+            if(mCartList.size() > 0){
+                listenCartText.setValue( mCartList.size()+"");
+                cartCount = mCartList.size()+"";
+            }
+            if(isGotoCart){
+                performGetCartRequest();
+                isGotoCart = false;
+            }
+            //setProgressDialog(false);
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+            setProgressDialog(false);
+        }
+    };
 
 
 }

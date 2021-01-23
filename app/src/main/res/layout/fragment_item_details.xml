@@ -255,13 +255,12 @@
 
 
                         <Button
-
                             android:id="@+id/btn_add_to_cart"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="20dp"
                             android:background="@drawable/button_drawable"
-                            android:text="Make Payment"
+                            android:text="Add to Cart"
                             android:textColor="@color/colorWhite"
                             android:textSize="18dp" />
 

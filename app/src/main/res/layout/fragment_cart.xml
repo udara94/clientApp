@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/district_layout"
     android:orientation="vertical"
@@ -39,4 +40,14 @@
 
         </RelativeLayout>
     </LinearLayout>
+    <Button
+        android:layout_alignParentBottom="true"
+        android:id="@+id/btn_pay_now"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/button_drawable"
+        android:text="Pay Now"
+        android:textColor="@color/colorWhite"
+        android:textSize="18dp" />
 </RelativeLayout>

@@ -170,10 +170,8 @@ public class ItemDetailsFragment extends BaseFragment implements BaseBackPressed
                     String table = txtTableNo.getText().toString();
                     if(table != null && !table.isEmpty()){
                         mItem.setTableNo(table);
-                        if (!BaseApplication.getBaseApplication().isLoadPaymentDetailsScreen()) {
-                            BaseApplication.getBaseApplication().setLoadPaymentDetailsScreen(true);
-                            gotoPaymentDetailsScreen(mItem);
-                        }
+                        addToCart();
+                        getFragmentManager().popBackStack();
                     }else {
                         //Toast.makeText(getContext(), "Please Enter Table Number",Toast.LENGTH_LONG).show();
                         showSnackBar("Please Enter Table Number");
@@ -220,10 +218,16 @@ public class ItemDetailsFragment extends BaseFragment implements BaseBackPressed
         });
     }
 
-
-    public void gotoPaymentDetailsScreen(Item item){
-        ((MainActivity) getActivity()).addFragment(new PaymentFragment().newInstance(item), PaymentFragment.getTAG());
+    private  void addToCart(){
+         String id = mDatabaseReference.push().getKey();
+        if(id != null){
+            mItem.setId(id);
+            mItem.setPaid("N");
+            mDatabaseReference.child(id).setValue(mItem);
+            Toast.makeText(getActivity(), "Item added to the cart", Toast.LENGTH_LONG).show();
+        }
     }
+
 
     private void performAddOrReduce(boolean isReduce){
         int quantity;

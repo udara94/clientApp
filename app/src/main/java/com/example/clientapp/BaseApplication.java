@@ -29,6 +29,10 @@ public class BaseApplication extends MultiDexApplication {
 
     @Getter
     @Setter
+    private boolean loadCartScreen = false;
+
+    @Getter
+    @Setter
     private boolean loadOrderDetailsScreen = false;
 
     @Getter
