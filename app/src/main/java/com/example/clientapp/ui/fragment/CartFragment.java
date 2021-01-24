@@ -185,7 +185,7 @@ public class CartFragment extends BaseFragment implements BaseBackPressedListene
         mCustomView.findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getFragmentManager().popBackStack();
+                ((MainActivity) getActivity()).replaceFragment(new HomeFragment().newInstance(), HomeFragment.getTAG());
             }
         });
         title.setTypeface(CommonUtils.getInstance().getFont(getActivity(), ApplicationConstants.FONT_ROBOTO_BOLD));

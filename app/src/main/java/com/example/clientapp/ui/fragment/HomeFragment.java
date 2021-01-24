@@ -41,6 +41,9 @@ public class HomeFragment extends BaseFragment implements BaseBackPressedListene
 
     final String TAG = HomeFragment.this.getClass().getSimpleName();
 
+    public static String getTAG() {
+        return "HomeFragment";
+    }
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
         return fragment;
@@ -177,6 +180,7 @@ public class HomeFragment extends BaseFragment implements BaseBackPressedListene
     ValueEventListener valueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
+            mItemList.clear();
             for (DataSnapshot ds: dataSnapshot.getChildren()) {
                 Item item = ds.getValue(Item.class);
                 if(item != null){
@@ -233,6 +237,7 @@ public class HomeFragment extends BaseFragment implements BaseBackPressedListene
             performGetItemsRequest();
             performGetCartRequest();
         }
+        performGetNotificationRequest();
 
         listenNotificationText.setValue("0");
         listenCartText.setValue("0");
@@ -245,7 +250,7 @@ public class HomeFragment extends BaseFragment implements BaseBackPressedListene
     public void gotoNotification(){
         if (!BaseApplication.getBaseApplication().isLoadNotificationScreen()) {
             BaseApplication.getBaseApplication().setLoadNotificationScreen(true);
-            ((MainActivity) getActivity()).addFragment(new NotificationFragment().newInstance(), NotificationFragment.getTAG());
+            ((MainActivity) getActivity()).replaceFragment(new NotificationFragment().newInstance(), NotificationFragment.getTAG());
         }
     }
 
@@ -254,7 +259,7 @@ public class HomeFragment extends BaseFragment implements BaseBackPressedListene
         mCartReference.removeEventListener(cartListener);
         if (!BaseApplication.getBaseApplication().isLoadCartScreen()) {
             BaseApplication.getBaseApplication().setLoadCartScreen(true);
-            ((MainActivity) getActivity()).replaceFragment(new CartFragment().newInstance(mCartList));
+            ((MainActivity) getActivity()).replaceFragment(new CartFragment().newInstance(mCartList), CartFragment.getTAG());
         }
     }
 
@@ -275,6 +280,8 @@ public class HomeFragment extends BaseFragment implements BaseBackPressedListene
     ValueEventListener notificationListner = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
+            notificationCount = "0";
+            notificationList.clear();
             int userType = BaseApplication.getBaseApplication().getUserType();
             for (DataSnapshot ds: dataSnapshot.getChildren()) {
                 Notification item = ds.getValue(Notification.class);

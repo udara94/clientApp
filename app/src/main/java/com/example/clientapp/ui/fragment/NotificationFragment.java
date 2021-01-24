@@ -192,12 +192,15 @@ public class NotificationFragment extends BaseFragment implements BaseBackPresse
         getFragmentManager().popBackStack();
     }
 
+
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         BaseApplication.getBaseApplication().setLoadNotificationScreen(false);
         mDatabaseReference.removeEventListener(notificationListner);
         mCartReference.removeEventListener(cartItemListner);
+        notificationFragment = null;
     }
 
 

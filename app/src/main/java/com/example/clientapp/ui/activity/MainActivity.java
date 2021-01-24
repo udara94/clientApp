@@ -34,7 +34,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.clientapp.R;
 import com.example.clientapp.model.dto.NotificationBody;
 import com.example.clientapp.mvp.presenters.Presenter;
+import com.example.clientapp.ui.fragment.CartFragment;
 import com.example.clientapp.ui.fragment.HomeFragment;
+import com.example.clientapp.ui.fragment.NotificationFragment;
 import com.example.clientapp.utils.BaseBackPressedListener;
 import com.example.clientapp.utils.PrefManager;
 import com.google.android.material.navigation.NavigationView;
@@ -197,7 +199,7 @@ public class MainActivity extends BaseActivity {
 //                fragmentTransaction.replace(R.id.fragment_container, fragment);
 //                fragmentTransaction.commitAllowingStateLoss();
 
-                    replaceFragment(fragment);
+                    replaceFragment(fragment, fragment.getTag());
 
             }
         };
@@ -311,7 +313,7 @@ public class MainActivity extends BaseActivity {
         fragTransaction.commitAllowingStateLoss();
     }
 
-    public void replaceFragment(Fragment fragment) {
+    public void replaceFragment(Fragment fragment, String TAG) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
@@ -348,6 +350,14 @@ public class MainActivity extends BaseActivity {
                 loadHomeFragment();
                 return;
             }
+        }
+        if(NotificationFragment.notificationFragment != null){
+            replaceFragment(new HomeFragment(),HomeFragment.getTAG());
+            return;
+        }
+        if(CartFragment.cartFragment != null){
+            replaceFragment(new HomeFragment(),HomeFragment.getTAG());
+            return;
         }
             super.onBackPressed();
     }

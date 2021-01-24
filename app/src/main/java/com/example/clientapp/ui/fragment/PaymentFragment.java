@@ -107,7 +107,7 @@ public class PaymentFragment extends BaseFragment implements BaseBackPressedList
         if(radioCash.isChecked()){
             addToCart();
             getFragmentManager().popBackStack();
-            ((MainActivity) getActivity()).replaceFragment(new HomeFragment().newInstance());
+            ((MainActivity) getActivity()).replaceFragment(new HomeFragment().newInstance(), HomeFragment.getTAG());
         }else {
             if (!BaseApplication.getBaseApplication().isLoadCashlessScreen()) {
                 BaseApplication.getBaseApplication().setLoadCashlessScreen(true);

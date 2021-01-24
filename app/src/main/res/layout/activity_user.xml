@@ -5,16 +5,21 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
 <RelativeLayout
-    android:alpha="0.5"
     android:background="@drawable/usertype"
     android:layout_width="match_parent"
     android:layout_height="match_parent"/>
+    <RelativeLayout
+        android:alpha="0.5"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/transparent_drawable"/>
     <TextView
         android:layout_centerInParent="true"
         android:textStyle="bold"
-        android:textColor="@color/colorOrange"
-        android:textSize="25dp"
+        android:textColor="@color/colorWhite"
+        android:textSize="30dp"
         android:id="@+id/lbl_user_select"
         android:gravity="center"
         android:text="Select User Type"
