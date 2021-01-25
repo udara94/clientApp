@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,6 +36,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class HomeFragment extends BaseFragment implements BaseBackPressedListener.OnBackPressedListener {
@@ -71,6 +73,8 @@ public class HomeFragment extends BaseFragment implements BaseBackPressedListene
     private String notificationCount = "0";
     private String cartCount = "0";
     private boolean isGotoCart = false;
+
+    @BindView(R.id.background_layout) RelativeLayout parentLayout;
 
 
     @Override
@@ -227,11 +231,33 @@ public class HomeFragment extends BaseFragment implements BaseBackPressedListene
     @Override
     public void onResume() {
         super.onResume();
+        final int sdk = android.os.Build.VERSION.SDK_INT;
+        final int userType = BaseApplication.getBaseApplication().getUserType();
+
+        if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            if(userType == 0){
+                parentLayout.setBackgroundDrawable(ContextCompat.getDrawable(mContext, R.drawable.usertype));
+            }
+            else if(userType == 1){
+                parentLayout.setBackgroundDrawable(ContextCompat.getDrawable(mContext, R.drawable.cashier_bg_image));
+            }else if(userType == 2){
+                parentLayout.setBackgroundDrawable(ContextCompat.getDrawable(mContext, R.drawable.kitchen_bg_image));
+            }
+
+        } else {
+            if(userType == 0){
+                parentLayout.setBackground(ContextCompat.getDrawable(mContext, R.drawable.usertype));
+            }
+            else if(userType == 1){
+                parentLayout.setBackground(ContextCompat.getDrawable(mContext, R.drawable.cashier_bg_image));
+            }else if(userType == 2){
+                parentLayout.setBackground(ContextCompat.getDrawable(mContext, R.drawable.kitchen_bg_image));
+            }
+        }
         firebaseHelper = new FirebaseHelper();
         mNotificationReference = FirebaseDatabase.getInstance().getReference("NotificationList");
         mCartReference = FirebaseDatabase.getInstance().getReference("cart");
 
-        int userType = BaseApplication.getBaseApplication().getUserType();
         if(userType == 0){
             mDatabaseReference = FirebaseDatabase.getInstance().getReference("itemList");
             performGetItemsRequest();
